@@ -17,10 +17,10 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = (String) session.getAttribute("user");
-        if (Users.getInstance().getUsers().contains(user)) {
+        if (user == null) {
             try {
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-            } catch (IOException | ServletException ex) {
+                response.sendRedirect("/login.jsp");
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         } else {
