@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -14,8 +15,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = (String) request.getSession().getAttribute("user");
-        if (user == null) {
+        HttpSession session = request.getSession();
+        String user = (String) session.getAttribute("user");
+        if (Users.getInstance().getUsers().contains(user)) {
             try {
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             } catch (IOException | ServletException ex) {
